@@ -1,0 +1,84 @@
+---
+description: Rule for automating GitHub Issue creation from local markdown tasks and configuring Project Roadmap without Milestones.
+globs: tasks/**/*.md
+alwaysApply: false
+---
+
+# GitHub Issue Automation from Local Tasks
+
+## Context
+- Applies when converting local markdown task files (e.g., `tasks/ISSUE-*.md`) into GitHub Issues.
+- Applies when configuring the Project Roadmap (Start/End dates) directly from task metadata.
+- **Explicitly excludes the use of GitHub Milestones** for scheduling; relies solely on Project V2 fields.
+
+## Prerequisites
+1. **GitHub CLI (`gh`) installed**: Version 2.20.0+ recommended.
+2. **Authentication**: `gh auth login` completed.
+3. **Scopes**: Must have `project` scope for Project V2 manipulation.
+   - Check: `gh auth status`
+   - Refresh: `gh auth refresh -s project`
+
+## Process Workflow
+
+### 1. Issue Creation
+- **Source**: Parse title, body, and dates from local markdown files.
+- **Command**: `gh issue create`
+- **Labels**: Always include `Issue-Automation` to track generated issues.
+- **Pattern**:
+  ```bash
+  gh issue create --repo <owner>/<repo> --title "<Title>" --body "<Content>" --label "Issue-Automation"
+  ```
+
+### 2. Project Integration
+- **Add Item**: Add the created issue to the target GitHub Project.
+- **Command**: `gh project item-add`
+- **Retrieval**: Capture the returned **Item ID** (Node ID) for subsequent edits.
+- **Pattern**:
+  ```bash
+  gh project item-add <ProjectNumber> --owner <Owner> --url <IssueURL> --format json
+  ```
+
+### 3. Roadmap Configuration (No Milestones)
+- **Goal**: Visualize tasks on the Project Roadmap view using date fields.
+- **Fields**: Identify field IDs for `Start Date` and `End Date` (or `Target Date`) using `gh project field-list`.
+- **Command**: `gh project item-edit`
+- **Pattern**:
+  ```bash
+  # Set Start Date
+  gh project item-edit --project-id <ProjectID> --id <ItemID> --field-id <StartFieldID> --date "YYYY-MM-DD"
+  
+  # Set End/Target Date
+  gh project item-edit --project-id <ProjectID> --id <ItemID> --field-id <EndFieldID> --date "YYYY-MM-DD"
+  ```
+
+## Examples
+
+<example>
+# Full workflow for a single task file
+# 1. Parse dates (Start: 2025-12-10, End: 2025-12-12)
+# 2. Create Issue
+ISSUE_URL=$(gh issue create -t "[TASK-01] Refactor Auth" -F tasks/task-01.md -l "Issue-Automation")
+
+# 3. Add to Project (Project #5)
+ITEM_JSON=$(gh project item-add 5 --owner ehdwns0814 --url $ISSUE_URL --format json)
+ITEM_ID=$(echo $ITEM_JSON | jq -r '.id')
+
+# 4. Set Dates (Using known Field IDs)
+# Start Date Field: PVTF_...
+# End Date Field: PVTF_...
+gh project item-edit --project-id PVT_kwH... --id $ITEM_ID --field-id PVTF_Start... --date "2025-12-10"
+gh project item-edit --project-id PVT_kwH... --id $ITEM_ID --field-id PVTF_End... --date "2025-12-12"
+</example>
+
+<bad-example>
+# Creating Milestone (Do NOT use)
+gh api repos/owner/repo/milestones -f title="Sprint 1" ...
+gh issue edit 1 --milestone "Sprint 1"
+
+# Reason: This rule specifies managing schedule via Project fields only, not Milestones.
+</bad-example>
+
+## Checklist for New Tasks
+1. [ ] Ensure markdown file contains `Start Date` and `End Date` metadata.
+2. [ ] Verify `Issue-Automation` label is applied.
+3. [ ] Confirm dates appear correctly in the GitHub Project Roadmap view.

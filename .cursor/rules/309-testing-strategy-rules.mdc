@@ -1,0 +1,61 @@
+---
+description: Guidelines for writing Unit, Integration, and E2E tests in Spring Boot.
+globs: src/test/java/**/*.java
+alwaysApply: true
+---
+# Testing Strategy Rules
+
+## 1. General Principles
+- **Testing Pyramid**: Prioritize Unit Tests > Integration Tests > E2E Tests.
+- **Naming**: Use descriptive test names (e.g., `createUser_ShouldReturnId_WhenInputIsValid`).
+- **Pattern**: Follow **Given-When-Then** (BDD style).
+
+## 2. Unit Testing
+- **Scope**: Service layer logic, Utility classes.
+- **Framework**: JUnit 5 + Mockito.
+- **No Context**: Do NOT load Spring Context (`@SpringBootTest`). Use `@ExtendWith(MockitoExtension.class)`.
+- **Speed**: Must run extremely fast (< 100ms).
+
+```java
+@ExtendWith(MockitoExtension.class)
+class UserServiceTest {
+    @Mock UserRepository userRepository;
+    @InjectMocks UserService userService;
+    
+    @Test
+    void register_ShouldSaveUser() {
+        // Given
+        UserDto dto = new UserDto(...);
+        // When
+        userService.register(dto);
+        // Then
+        verify(userRepository).save(any());
+    }
+}
+```
+
+## 3. Integration Testing
+- **Scope**: Controller layer (API contract), Database interactions, External Integrations.
+- **Slices**: Use Slice Tests for efficiency:
+  - `@WebMvcTest` for Controllers (mock Service).
+  - `@DataJpaTest` for Repositories.
+- **Full Context**: Use `@SpringBootTest` only when necessary (e.g., full flow verification).
+
+## 4. Testcontainers
+- **Usage**: Use Testcontainers for external dependencies (PostgreSQL, Redis, Kafka) instead of H2 or embedded mocks.
+- **Configuration**: Use `@Testcontainers` and `@Container` or a shared `AbstractIntegrationTest` class.
+
+```java
+@SpringBootTest
+@Testcontainers
+class UserIntegrationTest {
+    @Container
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15");
+    
+    // ... config
+}
+```
+
+## 5. Coverage
+- **Metric**: Aim for > 80% line coverage for business logic.
+- **Critical Paths**: 100% coverage for Auth, Payment, and Data Critical paths.

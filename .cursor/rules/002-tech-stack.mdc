@@ -1,0 +1,39 @@
+---
+description: Defines the core technical stack for the Coached Backend system.
+globs: 
+alwaysApply: true
+---
+# Technical Stack
+Referenced in: [001-project-overview.mdc](001-project-overview.mdc)
+
+## Platform
+- Target Runtime: Java 17+ (LTS)
+- Deployment: Docker / Kubernetes
+- Development OS: macOS / Linux / Windows
+
+## Language & Frameworks
+- Language: Java 17+
+- Framework: Spring Boot 3.x
+- Build Tool: Gradle (Kotlin DSL preferred)
+
+## Architecture Components
+- **API Style**: RESTful API
+- **Architecture Pattern**: Hexagonal / Layered Architecture
+- **Microservices Support**: Spring Cloud (if applicable)
+
+## Data & Persistence
+- **Primary Database**: PostgreSQL (Relational Data)
+- **Cache & Session**: Redis (Lettuce/Redisson) - See [303-spring-redis-lettuce-redisson-rules.mdc](303-spring-redis-lettuce-redisson-rules.mdc)
+- **Messaging / Event Streaming**: Apache Kafka - See [304-kafka-data-pipeline-rules.mdc](304-kafka-data-pipeline-rules.mdc)
+
+## Key Libraries & Tools
+- **ORM**: Spring Data JPA / Hibernate
+- **Validation**: Hibernate Validator
+- **Testing**: JUnit 5, Mockito, Testcontainers
+- **Docs**: SpringDoc OpenAPI (Swagger)
+
+## See also:
+- [003-development-guidelines.mdc](003-development-guidelines.mdc) for development standards
+- [303-spring-redis-lettuce-redisson-rules.mdc](303-spring-redis-lettuce-redisson-rules.mdc)
+- [304-kafka-data-pipeline-rules.mdc](304-kafka-data-pipeline-rules.mdc)
+- [305-kafka-msa-saga-pattern-rules.mdc](305-kafka-msa-saga-pattern-rules.mdc)

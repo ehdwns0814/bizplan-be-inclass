@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"name": "bizplan-be-inclass",
+			"path": "."
+		},
+		{
+			"name": "docs",
+			"path": "../AI-Powered Running Coach/6_에이전트_Task_추출결과_Gem3Pro/docs"
+		},
+		{
+			"name": "tasks",
+			"path": "../AI-Powered Running Coach/6_에이전트_Task_추출결과_Gem3Pro/tasks"
+		}
+	],
+	"settings": {}
+}

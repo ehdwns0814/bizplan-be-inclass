@@ -1,0 +1,39 @@
+---
+description: Project overview for the Coached Backend Service
+globs: 
+alwaysApply: true
+---
+# PROJECT OVERVIEW: Coached Backend Service
+
+## Vision
+To provide a robust, scalable, and secure backend infrastructure for the "Coached" AI-powered running coach application, enabling user data persistence, cross-device synchronization, and advanced analytics (Post-MVP features).
+
+## Core Features
+- **User Management**: Authentication, profile management, and secure identity handling.
+- **Data Synchronization**: Cloud storage for running analysis results (JSON/Metrics).
+- **Event Processing**: Asynchronous processing of analysis events for future advanced insights.
+- **Notification Service**: Push notifications for user engagement and re-analysis reminders.
+
+## Target Audience
+- **Primary**: Mobile App (iOS) clients consuming APIs.
+- **Secondary**: Admin/Data Analysts monitoring system performance and user metrics.
+
+## Project Goals
+- **Scalability**: Support increasing concurrent user requests with low latency.
+- **Reliability**: Ensure high availability and data consistency using Saga patterns for distributed transactions.
+- **Security**: Protect user health data with industry-standard encryption and auth protocols.
+
+## Success Metrics
+- **API Latency**: P99 < 200ms for core endpoints.
+- **Uptime**: 99.9% availability.
+- **Data Integrity**: Zero data loss in pipeline processing.
+
+## Project Philosophy
+- **Clean Architecture**: Separation of concerns (Domain, Application, Infrastructure).
+- **Event-Driven**: Utilizing Kafka for decoupled service interactions.
+- **Test-Driven**: Comprehensive testing (Unit, Integration, E2E) with Testcontainers.
+- **Documentation First**: API-first design using OpenAPI/Swagger.
+
+## See also:
+- [002-tech-stack.mdc](002-tech-stack.mdc) for implementation details
+- [003-development-guidelines.mdc](003-development-guidelines.mdc) for development standards

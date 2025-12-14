@@ -1,0 +1,9 @@
+---
+alwaysApply: true
+---
+Globs: /**/*
+
+# COMMENTS
+- Always include meaningful comments.
+- Delete comments only if they are obsolete.
+- Comments should improve code readability and maintainability.

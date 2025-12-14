@@ -1,0 +1,54 @@
+---
+description: Rules for Spring Boot project architecture, package structure, and coding standards.
+globs: src/main/java/**/*.java
+alwaysApply: true
+---
+# Spring Boot Architecture & Coding Rules
+
+## 1. Architecture Pattern
+Follow a **Layered Architecture** or **Hexagonal Architecture** (Ports & Adapters) principles.
+
+### 1.1 Package Structure (Layered)
+```
+com.example.project
+├── api             // Controllers, Request/Response DTOs
+├── business        // Service Layer, Business Logic
+│   ├── service
+│   └── domain      // Domain Models (POJO)
+├── data            // JPA Entities, Repositories
+├── global          // Global configs, Exceptions, Utils
+│   ├── config
+│   ├── error
+│   └── util
+└── infra           // External integrations (Kafka, Redis, 3rd Party APIs)
+```
+
+## 2. Coding Standards
+
+### 2.1 DTO (Data Transfer Object)
+- **Separation**: NEVER expose JPA Entities directly in the API. Always use DTOs.
+- **Mapping**: Use mapping libraries (e.g., MapStruct) or static factory methods (`from`, `toEntity`) for conversion.
+- **Immutability**: Prefer Record classes (Java 14+) or `@Value` (Lombok) for DTOs.
+
+### 2.2 Controller Layer
+- **Responsibility**: Validate inputs, delegate to Service, and return DTOs.
+- **No Logic**: Do not implement business logic in Controllers.
+
+### 2.3 Service Layer
+- **Transactional**: Use `@Transactional` for methods that modify data.
+- **Read-Only**: Use `@Transactional(readOnly = true)` at the class level by default.
+- **Business Logic**: Core business rules reside here.
+
+### 2.4 Lombok Usage
+- **Allowed**: `@Getter`, `@Setter`, `@Builder`, `@RequiredArgsConstructor`.
+- **Avoid**: `@Data` (can cause equals/hashCode issues with JPA), `@AllArgsConstructor` (fragile refactoring).
+- **Entities**: Use `@NoArgsConstructor(access = AccessLevel.PROTECTED)` for JPA Entities.
+
+### 2.5 Dependency Injection
+- **Constructor Injection**: Always use constructor injection (via `@RequiredArgsConstructor`).
+- **Field Injection**: AVOID `@Autowired` on fields.
+
+## 3. General Good Practices
+- **Logging**: Use `@Slf4j`. Log at appropriate levels (INFO for flow, ERROR for exceptions, DEBUG for data).
+- **Constants**: Avoid magic numbers/strings. Use `static final` constants or Enums.
+- **Date/Time**: Use `java.time` API (`LocalDateTime`, `ZonedDateTime`) instead of `java.util.Date`.

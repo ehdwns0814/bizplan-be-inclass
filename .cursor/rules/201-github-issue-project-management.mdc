@@ -1,0 +1,83 @@
+---
+description: Guidelines for managing GitHub issues, milestones, projects, and Pull Requests for Backend projects using CLI tools
+globs: tasks/**/*.md, .github/**/*.yml, .github/workflows/*.yml
+alwaysApply: false
+---
+
+# GitHub Issue & Project Management
+
+## Context
+- Applies when creating issues from task documents
+- Applies when managing project roadmaps via GitHub CLI
+- **Applies when creating Pull Requests**
+
+## Rules
+
+1. **Issue Creation**:
+   - Source tasks from `tasks/priority-N/` markdown files.
+   - Use `gh issue create` with title `[#NNN] Title`, body from file, and appropriate labels.
+   - Labels must include:
+     - Priority: `priority-N` (1-4)
+     - Type: `feature`, `bugfix`, `refactoring`, `testing`
+     - Layer: `API`, `Service`, `Repository`, `Event` (optional)
+     - Component: `Auth`, `User`, `Analysis`, `Notification` (optional)
+
+2. **Project & Roadmap**:
+   - Use Project V2 Node IDs for item manipulation.
+   - Required Fields: `Start Date` and `End Date` (Type: `DATE`).
+   - Set dates via `gh project item-edit --project-id <NodeID>`.
+
+3. **Pull Request Requirements**:
+   - **Mandatory**: Build successful (Gradle), all tests passing.
+   - **Code Quality**: Linter passing (Checkstyle/Spotless), no major SonarQube issues.
+   - **Template**: Include description, related issue, API changes (if any), testing checklist.
+
+4. **Automation**:
+   - Verify field IDs via `gh project field-list` before editing.
+   - Use batch scripts for multiple issue creation.
+
+## Examples
+
+<example>
+# Create Backend issue with full labels
+gh issue create \
+  -t "[#001] Implement User Authentication API" \
+  -F tasks/priority-1/001-auth-api.md \
+  -l "priority-1,feature,API,Auth"
+
+# Add to project and set roadmap dates
+ITEM_ID=$(gh project item-add <PROJECT_ID> --url <issue-url> --format json | jq -r '.id')
+gh project item-edit --id $ITEM_ID --project-id <NodeID> --field-id <StartFieldID> --date 2025-12-11
+gh project item-edit --id $ITEM_ID --project-id <NodeID> --field-id <EndFieldID> --date 2025-12-25
+</example>
+
+<example>
+# Create PR with Backend checklist
+gh pr create \
+  -t "Feat: Add JWT Authentication Filter" \
+  -b "## Description
+Implement JWT validation logic in Spring Security filter chain.
+
+## Related Issue
+Closes #001
+
+## Testing
+- [x] Unit tests for TokenProvider
+- [x] Integration test for AuthController
+- [x] Tested with Postman
+
+## Checklist
+- [x] Checkstyle passing
+- [x] API Docs updated (Swagger)
+- [x] No sensitive data logged"
+</example>
+
+## Backend PR Checklist Template
+```markdown
+- [ ] Build successful (Gradle build)
+- [ ] Unit/Integration tests added and passing
+- [ ] Code style checked (Checkstyle/Spotless)
+- [ ] API Documentation updated (Swagger/OpenAPI)
+- [ ] Database migrations tested (if applicable)
+- [ ] Environment variables documented
+```

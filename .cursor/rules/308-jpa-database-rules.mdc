@@ -1,0 +1,32 @@
+---
+description: Best practices for using Spring Data JPA, Database interactions, and Schema management.
+globs: src/main/java/**/*Repository.java, src/main/java/**/*Entity.java, src/main/resources/db/migration/*.sql
+alwaysApply: true
+---
+# JPA & Database Rules
+
+## 1. Entity Design
+- **No Setter**: Avoid `@Setter` on Entities. Use domain-specific methods (e.g., `updateProfile()`, `changeStatus()`) to modify state.
+- **Base Entity**: Extend a `BaseTimeEntity` (created_at, updated_at) using `@MappedSuperclass` and `@EntityListeners(AuditingEntityListener.class)`.
+- **Primary Key**: Use `Long` (BigInt) with `@GeneratedValue(strategy = GenerationType.IDENTITY)`.
+
+## 2. Performance Optimization
+- **N+1 Problem**: Always check generated queries.
+  - Use `Fetch Join` (JPQL) or `@EntityGraph` for eager loading related entities.
+  - Use Batch Size (`spring.jpa.properties.hibernate.default_batch_fetch_size`) for collections.
+- **Lazy Loading**: Always set `fetch = FetchType.LAZY` for `@ManyToOne` and `@OneToOne`.
+
+## 3. Transaction Management
+- **ReadOnly Default**: Apply `@Transactional(readOnly = true)` at the Service class level.
+- **Write Scope**: Apply `@Transactional` explicitly on methods that modify data.
+- **Propagation**: Understand `@Transactional(propagation = ...)` when calling other transactional methods.
+
+## 4. Schema Management (Migration)
+- **Tool**: Use **Flyway** or **Liquibase** for versioned database changes.
+- **No Auto-DDL**: Set `spring.jpa.hibernate.ddl-auto` to `validate` (or `none`) in production. `update` is only for local dev (use with caution).
+- **Naming**: Use snake_case for table and column names in DB.
+
+## 5. Repository Usage
+- **Naming**: `Find...` methods should be descriptive (e.g., `findByEmailAndStatus`).
+- **QueryDSL**: Use QueryDSL for complex dynamic queries instead of complex JPQL strings.
+- **Projections**: Use Interface-based Projections when only specific fields are needed.
