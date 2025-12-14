@@ -9,6 +9,14 @@
 - **Estimated Effort**: M
 - **Parallelizable**: ❌ No (Depends on #009)
 
+## 📅 Roadmap Schedule
+- **Phase**: Phase 2 - AI Pipeline & Integration (Export)
+- **Start Date**: 2026-01-02 (Thursday)
+- **End Date**: 2026-01-03 (Friday)
+- **Duration**: 2 days
+- **Week**: Week 3
+- **⚠️ Blocker**: Cannot start until #009 is complete
+
 ## 🎯 목적
 생성된 사업계획서를 HWP(한글) 또는 PDF 형식으로 내보내는 기능을 구현합니다.
 

@@ -9,6 +9,14 @@
 - **Estimated Effort**: L
 - **Parallelizable**: ❌ No (Depends on #007, #008)
 
+## 📅 Roadmap Schedule
+- **Phase**: Phase 2 - AI Pipeline & Integration
+- **Start Date**: 2025-12-28 (Saturday) or 2025-12-30 (Monday)
+- **End Date**: 2026-01-02 (Thursday)
+- **Duration**: 5 days
+- **Week**: Week 2-3
+- **⚠️ Critical Blocker**: Requires BOTH #007 AND #008 to be complete
+
 ## 🎯 목적
 Wizard 답변 수집부터 AI 생성, 문서 저장까지 전체 플로우를 오케스트레이션하는 API를 구현합니다.
 

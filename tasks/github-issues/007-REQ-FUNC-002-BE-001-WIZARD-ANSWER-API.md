@@ -9,6 +9,14 @@
 - **Estimated Effort**: M
 - **Parallelizable**: ❌ No (Depends on #006)
 
+## 📅 Roadmap Schedule
+- **Phase**: Phase 1 - Core Backend Foundation
+- **Start Date**: 2025-12-19 (Thursday)
+- **End Date**: 2025-12-20 (Friday)
+- **Duration**: 2 days
+- **Week**: Week 1
+- **⚠️ Blocker**: Cannot start until #006 is complete
+
 ## 🎯 목적
 사업계획서 작성 Wizard의 단계별 답변을 저장하고 조회하는 API를 구현합니다.
 

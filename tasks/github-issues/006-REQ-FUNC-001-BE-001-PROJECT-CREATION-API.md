@@ -9,6 +9,13 @@
 - **Estimated Effort**: M
 - **Parallelizable**: ❌ No (Foundation task)
 
+## 📅 Roadmap Schedule
+- **Phase**: Phase 1 - Core Backend Foundation
+- **Start Date**: 2025-12-16 (Monday)
+- **End Date**: 2025-12-18 (Wednesday)
+- **Duration**: 3 days
+- **Week**: Week 1
+
 ## 🎯 목적
 사업계획서 프로젝트 생성 및 템플릿 목록 조회를 위한 RESTful API를 구현합니다.
 

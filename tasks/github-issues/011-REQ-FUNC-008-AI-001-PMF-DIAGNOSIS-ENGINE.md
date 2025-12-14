@@ -9,6 +9,15 @@
 - **Estimated Effort**: M
 - **Parallelizable**: ✅ Yes (Can develop with #012)
 
+## 📅 Roadmap Schedule
+- **Phase**: Phase 3 - Special Features
+- **Start Date**: 2026-01-06 (Monday)
+- **End Date**: 2026-01-08 (Wednesday)
+- **Duration**: 3 days
+- **Week**: Week 4
+- **✅ Parallel Development**: Can run simultaneously with #012
+- **⚠️ Blocker**: Cannot start until #008 is complete (shares LLM infrastructure)
+
 ## 🎯 목적
 Product-Market Fit(PMF) 진단을 위한 설문 분석 및 리포트 생성 LLM 엔진을 구현합니다.
 
