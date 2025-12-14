@@ -227,26 +227,169 @@ gh project item-add PROJECT_NUMBER \
   --url ISSUE_URL
 ```
 
-## 🗓️ Setting Roadmap Dates
+## 🗓️ Recommended Roadmap Schedule
 
-To set Start and End dates for roadmap visualization:
+Based on dependencies and execution order from `EXECUTION_ORDER.md`, here's the recommended schedule with specific dates:
+
+### Phase 1: Core Backend Foundation (Week 1: Dec 16-20, 2025)
+
+**Sequential Execution (Must be in order):**
+
+| Issue | Title | Start Date | End Date | Duration | Depends On |
+|-------|-------|------------|----------|----------|------------|
+| #2 (#006) | Project Creation API | 2025-12-16 | 2025-12-18 | 3 days | None |
+| #3 (#007) | Wizard Answer API | 2025-12-19 | 2025-12-20 | 2 days | #2 |
+
+### Phase 2: AI Pipeline & Integration (Week 2-3: Dec 23-Jan 3, 2026)
+
+**Parallel + Sequential:**
+
+| Issue | Title | Start Date | End Date | Duration | Depends On | Parallel With |
+|-------|-------|------------|----------|----------|------------|---------------|
+| #4 (#008) | LLM Engine (FastAPI) | 2025-12-23 | 2025-12-27 | 5 days | #3 | - |
+| #5 (#009) | Orchestration API | 2025-12-28 | 2026-01-02 | 5 days | #3, #4 | - |
+| #6 (#010) | Export HWP/PDF | 2026-01-02 | 2026-01-03 | 2 days | #5 | - |
+
+### Phase 3: Special Features (Week 4: Jan 6-10, 2026)
+
+**✅ FULLY PARALLEL - Can run simultaneously:**
+
+| Issue | Title | Start Date | End Date | Duration | Depends On | Parallel With |
+|-------|-------|------------|----------|----------|------------|---------------|
+| #7 (#011) | PMF Diagnosis AI | 2026-01-06 | 2026-01-08 | 3 days | #4 | #8 |
+| #8 (#012) | Financial Engine | 2026-01-06 | 2026-01-10 | 5 days | #2 | #7 |
+
+### Phase 4: Non-Functional Requirements & QA (Week 5: Jan 13-17, 2026)
+
+**Parallel + Final Sequential:**
+
+| Issue | Title | Start Date | End Date | Duration | Depends On | Parallel With |
+|-------|-------|------------|----------|----------|------------|---------------|
+| #9 (#013) | Security | 2026-01-13 | 2026-01-15 | 3 days | #2 | #10 |
+| #10 (#014) | Monitoring | 2026-01-13 | 2026-01-15 | 3 days | #2 | #9 |
+| #11 (#015) | Performance Test | 2026-01-16 | 2026-01-17 | 2 days | #5 | - |
+
+### 📊 Visual Timeline
+
+```
+Week 1 (Dec 16-20):        [#006]--->[#007]
+                              |
+Week 2-3 (Dec 23-Jan 3):     +------>[#008]
+                                         |
+                                         +--->[#009]--->[#010]
+                                         
+Week 4 (Jan 6-10):                  [#011 || #012]
+                                        (Parallel)
+                                        
+Week 5 (Jan 13-17):                [#013 || #014]--->[#015]
+                                      (Parallel)        (Final)
+```
+
+### 🔗 Dependency Chain Summary
+
+**Critical Path (Sequential):**
+```
+#006 → #007 → #008 → #009 → #010 → #015
+```
+
+**Parallel Opportunities:**
+- **Phase 3**: #011 and #012 can run together
+- **Phase 4**: #013 and #014 can run together
+
+**Blockers:**
+- ⚠️ #009 requires BOTH #007 AND #008 to be complete
+- ⚠️ #015 should wait for all features (#009) to be done
+
+---
+
+## 🛠️ Setting Roadmap Dates in GitHub Project
+
+### Step 1: Get Project and Field IDs
 
 ```bash
-# First, get field IDs
+# Get your project ID
+gh project list --owner your-username
+
+# Get field IDs for Start and End dates
 gh project field-list PROJECT_NUMBER --owner your-username
+```
 
-# Set dates (example)
-gh project item-edit \
-  --project-id PROJECT_NODE_ID \
-  --id ITEM_ID \
-  --field-id START_DATE_FIELD_ID \
-  --date "2025-12-16"
+### Step 2: Apply Dates to Each Issue
 
-gh project item-edit \
-  --project-id PROJECT_NODE_ID \
-  --id ITEM_ID \
-  --field-id END_DATE_FIELD_ID \
-  --date "2025-12-20"
+**Phase 1 Issues:**
+
+```bash
+# Issue #2 (#006) - Project Creation API
+gh project item-edit --project-id <PROJECT_ID> --id <ITEM_ID_2> \
+  --field-id <START_FIELD_ID> --date "2025-12-16"
+gh project item-edit --project-id <PROJECT_ID> --id <ITEM_ID_2> \
+  --field-id <END_FIELD_ID> --date "2025-12-18"
+
+# Issue #3 (#007) - Wizard Answer API (Depends on #2)
+gh project item-edit --project-id <PROJECT_ID> --id <ITEM_ID_3> \
+  --field-id <START_FIELD_ID> --date "2025-12-19"
+gh project item-edit --project-id <PROJECT_ID> --id <ITEM_ID_3> \
+  --field-id <END_FIELD_ID> --date "2025-12-20"
+```
+
+**Phase 2 Issues:**
+
+```bash
+# Issue #4 (#008) - LLM Engine
+gh project item-edit --project-id <PROJECT_ID> --id <ITEM_ID_4> \
+  --field-id <START_FIELD_ID> --date "2025-12-23"
+gh project item-edit --project-id <PROJECT_ID> --id <ITEM_ID_4> \
+  --field-id <END_FIELD_ID> --date "2025-12-27"
+
+# Issue #5 (#009) - Orchestration (Depends on #007 AND #008)
+gh project item-edit --project-id <PROJECT_ID> --id <ITEM_ID_5> \
+  --field-id <START_FIELD_ID> --date "2025-12-28"
+gh project item-edit --project-id <PROJECT_ID> --id <ITEM_ID_5> \
+  --field-id <END_FIELD_ID> --date "2026-01-02"
+
+# Issue #6 (#010) - Export
+gh project item-edit --project-id <PROJECT_ID> --id <ITEM_ID_6> \
+  --field-id <START_FIELD_ID> --date "2026-01-02"
+gh project item-edit --project-id <PROJECT_ID> --id <ITEM_ID_6> \
+  --field-id <END_FIELD_ID> --date "2026-01-03"
+```
+
+**Phase 3 Issues (Parallel):**
+
+```bash
+# Issue #7 (#011) - PMF Diagnosis
+gh project item-edit --project-id <PROJECT_ID> --id <ITEM_ID_7> \
+  --field-id <START_FIELD_ID> --date "2026-01-06"
+gh project item-edit --project-id <PROJECT_ID> --id <ITEM_ID_7> \
+  --field-id <END_FIELD_ID> --date "2026-01-08"
+
+# Issue #8 (#012) - Financial Engine
+gh project item-edit --project-id <PROJECT_ID> --id <ITEM_ID_8> \
+  --field-id <START_FIELD_ID> --date "2026-01-06"
+gh project item-edit --project-id <PROJECT_ID> --id <ITEM_ID_8> \
+  --field-id <END_FIELD_ID> --date "2026-01-10"
+```
+
+**Phase 4 Issues:**
+
+```bash
+# Issue #9 (#013) - Security
+gh project item-edit --project-id <PROJECT_ID> --id <ITEM_ID_9> \
+  --field-id <START_FIELD_ID> --date "2026-01-13"
+gh project item-edit --project-id <PROJECT_ID> --id <ITEM_ID_9> \
+  --field-id <END_FIELD_ID> --date "2026-01-15"
+
+# Issue #10 (#014) - Monitoring
+gh project item-edit --project-id <PROJECT_ID> --id <ITEM_ID_10> \
+  --field-id <START_FIELD_ID> --date "2026-01-13"
+gh project item-edit --project-id <PROJECT_ID> --id <ITEM_ID_10> \
+  --field-id <END_FIELD_ID> --date "2026-01-15"
+
+# Issue #11 (#015) - Performance Test
+gh project item-edit --project-id <PROJECT_ID> --id <ITEM_ID_11> \
+  --field-id <START_FIELD_ID> --date "2026-01-16"
+gh project item-edit --project-id <PROJECT_ID> --id <ITEM_ID_11> \
+  --field-id <END_FIELD_ID> --date "2026-01-17"
 ```
 
 ## ✅ Verification Checklist

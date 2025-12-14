@@ -9,6 +9,15 @@
 - **Estimated Effort**: M
 - **Parallelizable**: ✅ Yes (Can develop with #013, #015)
 
+## 📅 Roadmap Schedule
+- **Phase**: Phase 4 - Non-Functional Requirements & QA
+- **Start Date**: 2026-01-13 (Monday)
+- **End Date**: 2026-01-15 (Wednesday)
+- **Duration**: 3 days
+- **Week**: Week 5
+- **✅ Parallel Development**: Can run simultaneously with #013
+- **⚠️ Blocker**: Cannot start until #006 is complete
+
 ## 🎯 목적
 운영 모니터링을 위한 구조화된 로깅 및 메트릭 수집 시스템을 구축합니다.
 

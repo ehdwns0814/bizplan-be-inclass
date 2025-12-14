@@ -9,6 +9,15 @@
 - **Estimated Effort**: M
 - **Parallelizable**: ❌ No (Depends on #009)
 
+## 📅 Roadmap Schedule
+- **Phase**: Phase 4 - Non-Functional Requirements & QA (Final Validation)
+- **Start Date**: 2026-01-16 (Thursday)
+- **End Date**: 2026-01-17 (Friday)
+- **Duration**: 2 days
+- **Week**: Week 5
+- **⚠️ Critical**: Final validation - should run AFTER all features are complete
+- **⚠️ Blocker**: Cannot start until #009 is complete
+
 ## 🎯 목적
 API 성능 목표(P99 < 200ms)를 검증하기 위한 부하 테스트를 구축합니다.
 

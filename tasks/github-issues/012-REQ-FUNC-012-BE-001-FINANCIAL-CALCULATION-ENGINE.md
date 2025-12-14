@@ -9,6 +9,15 @@
 - **Estimated Effort**: L
 - **Parallelizable**: ✅ Yes (Can develop with #011)
 
+## 📅 Roadmap Schedule
+- **Phase**: Phase 3 - Special Features
+- **Start Date**: 2026-01-06 (Monday)
+- **End Date**: 2026-01-10 (Friday)
+- **Duration**: 5 days
+- **Week**: Week 4
+- **✅ Parallel Development**: Can run simultaneously with #011
+- **⚠️ Blocker**: Cannot start until #006 is complete
+
 ## 🎯 목적
 재무 데이터를 기반으로 손익계산서, 유닛 이코노믹스(CAC, LTV 등)를 계산하는 엔진을 구현합니다.
 

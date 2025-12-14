@@ -9,6 +9,15 @@
 - **Estimated Effort**: M
 - **Parallelizable**: ✅ Yes (Can develop with #014, #015)
 
+## 📅 Roadmap Schedule
+- **Phase**: Phase 4 - Non-Functional Requirements & QA
+- **Start Date**: 2026-01-13 (Monday)
+- **End Date**: 2026-01-15 (Wednesday)
+- **Duration**: 3 days
+- **Week**: Week 5
+- **✅ Parallel Development**: Can run simultaneously with #014
+- **⚠️ Blocker**: Cannot start until #006 is complete
+
 ## 🎯 목적
 민감한 사업 데이터를 보호하기 위한 암호화 및 보안 구성을 구현합니다.
 

@@ -9,6 +9,14 @@
 - **Estimated Effort**: L
 - **Parallelizable**: ✅ Yes (Can develop independently, integrates with #009)
 
+## 📅 Roadmap Schedule
+- **Phase**: Phase 2 - AI Pipeline & Integration
+- **Start Date**: 2025-12-23 (Monday)
+- **End Date**: 2025-12-27 (Friday)
+- **Duration**: 5 days
+- **Week**: Week 2
+- **⚠️ Blocker**: Cannot start until #007 is complete
+
 ## 🎯 목적
 사용자 답변을 기반으로 사업계획서를 생성하는 LLM 기반 엔진을 FastAPI로 구현합니다.
 
